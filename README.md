@@ -1,2 +1,3 @@
-# ideal-waffle
-Waffles as they were meant to be
+# Chessborne
+
+This application is a simple chess game where two players can play over their browser.
