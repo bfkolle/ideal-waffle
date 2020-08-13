@@ -1,0 +1,13 @@
+<img [src] = pieceImg>
+
+<ul *ngFor="let piece of pieces">
+    <div class=piece
+        [style.left.px] = "piece.xCoord"
+        [style.top.px]  = "piece.yCoord">
+
+        <img [src] = piece.imgSrc>
+    </div>
+    
+</ul>
+
+
