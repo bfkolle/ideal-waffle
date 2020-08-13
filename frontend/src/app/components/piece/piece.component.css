@@ -1,0 +1,8 @@
+.pieceSvg {
+    font-size: large;
+    height: 40px;
+    width: 40px;
+}
+.pieceSvgDiv {
+    z-index: 1;
+}
