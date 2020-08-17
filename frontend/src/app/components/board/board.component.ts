@@ -11,7 +11,7 @@ export class BoardComponent implements OnInit {
   pieces:Array<Piece> = [];
   piece:Piece;
 
-  constructor() { }
+  constructor() {}
 
   pieceImg = '/assets/Chessboard.png';
 
