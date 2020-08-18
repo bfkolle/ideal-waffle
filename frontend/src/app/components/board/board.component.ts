@@ -1,49 +1,8 @@
-import { Piece } from './../../models/piece';
 import { Component, OnInit } from '@angular/core';
+import { Piece } from './../../models/piece';
+import { BoardTile } from './../../models/board';
 
 const BACK_ROW_PIECES: string[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
-
-function generateBackRow(color: string): Piece[] {
-  return BACK_ROW_PIECES.map((piece, index) => {
-    const location = color === 'white'
-    ? `${String.fromCharCode(65 + index)}1`
-    : `${String.fromCharCode(65 + index)}8`;
-    return {
-      type: piece,
-      color,
-      location,
-    };
-  });
-}
-
-function generatePawnRow(color: string): Piece[] {
-  const pawnRow: Piece[] = [];
-  for (let index = 0; index < 8; index++) {
-    const location = color === 'white'
-    ? `${String.fromCharCode(65 + index)}2`
-    : `${String.fromCharCode(65 + index)}7`;
-    pawnRow.push({
-      type: 'pawn',
-      color,
-      location
-    });
-  }
-  return pawnRow;
-}
-
-const defaultChessBoard = (): Piece[][] => {
-  const board = [];
-  board[0] = generateBackRow('white');
-  board[1] = generatePawnRow('white');
-  board[2] = [];
-  board[3] = [];
-  board[4] = [];
-  board[5] = [];
-  board[6] = generatePawnRow('black');
-  board[7] = generateBackRow('black');
-
-  return board;
-};
 
 @Component({
   selector: 'app-board',
@@ -52,24 +11,84 @@ const defaultChessBoard = (): Piece[][] => {
 })
 export class BoardComponent implements OnInit {
   chessPieces: Array<Array<Piece>> = [];
-  // currentPiece = 'pawn'; // This is for testing, plan on this being dynamic
-  // currentColor = 'black'; // This is for testing, plan on this being dynamic
-  board: number[][];
+  boardPattern: number[][] = [];
+  board: BoardTile[][] = [];
 
-  constructor(
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.board = [];
-    for (let i = 0; i < 8; i++)
-    {
-      this.board[i] = [];
-      for (let j = 0; j < 8; j++)
-      {
-        this.board[i][j] = i + j;
+    this.boardPattern = this.setupBoardPattern();
+    this.chessPieces = this.defaultChessBoard();
+    this.board = this.setupBoard();
+  }
+
+  private generateBackRow(color: string): Piece[] {
+    return BACK_ROW_PIECES.map((piece, index) => {
+      const location = color === 'white'
+      ? `${String.fromCharCode(65 + index)}1`
+      : `${String.fromCharCode(65 + index)}8`;
+      return {
+        type: piece,
+        color,
+        location,
+      };
+    });
+  }
+
+  private generatePawnRow(color: string): Piece[] {
+    const pawnRow: Piece[] = [];
+    for (let index = 0; index < 8; index++) {
+      const location = color === 'white'
+      ? `${String.fromCharCode(65 + index)}2`
+      : `${String.fromCharCode(65 + index)}7`;
+      pawnRow.push({
+        type: 'pawn',
+        color,
+        location
+      });
+    }
+    return pawnRow;
+  }
+
+  private defaultChessBoard(): Piece[][] {
+    const board = [];
+    board[0] = this.generateBackRow('white');
+    board[1] = this.generatePawnRow('white');
+    board[2] = [];
+    board[3] = [];
+    board[4] = [];
+    board[5] = [];
+    board[6] = this.generatePawnRow('black');
+    board[7] = this.generateBackRow('black');
+    return board;
+  }
+
+  private setupBoardPattern(): number[][] {
+    const board: number[][] = [];
+    for (let i = 0; i < 8; i++) {
+      board[i] = [];
+      for (let j = 0; j < 8; j++) {
+        board[i][j] = i + j;
       }
     }
+    return board;
+  }
 
-    this.chessPieces = defaultChessBoard();
+  private setupBoard(): BoardTile[][] {
+    return this.boardPattern.map((row, rowIndex) => {
+      return row.map((tile, tileIndex) => {
+        if (tile % 2 === 0) {
+          return {
+            piece: this.chessPieces[rowIndex][tileIndex],
+            isWhiteTile: true,
+          };
+        } else {
+          return {
+            piece: this.chessPieces[rowIndex][tileIndex],
+            isWhiteTile: false,
+          };
+        }
+      });
+    });
   }
 }
