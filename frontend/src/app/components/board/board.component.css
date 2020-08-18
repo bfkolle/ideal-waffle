@@ -3,3 +3,17 @@
     border-width: 3px;
     border-color: 'black';
 }
+
+.whiteTile {
+    width: 60px;
+    height: 60px;
+    border-style: solid;
+    background-color: white;
+}
+    
+.blackTile {
+    width: 60px;
+    height: 60px;
+    border-style: solid;
+    background-color: black;
+}
