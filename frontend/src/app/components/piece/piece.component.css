@@ -2,6 +2,7 @@
     font-size: large;
     height: 45px;
     width: 45px;
+    padding: 8px 8px 7px 7px;
 }
 .pieceSvgDiv {
     z-index: 1;
