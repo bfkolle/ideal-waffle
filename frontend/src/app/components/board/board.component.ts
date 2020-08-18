@@ -22,11 +22,10 @@ export class BoardComponent implements OnInit {
     this.board = this.setupBoard();
   }
 
-  private decodeCoords(val:string)
+  private decodeCoords(val: string)
   {
-    let xVal:number = val.charCodeAt(0);
-    xVal -= 65; // 65 is ASCII A, and we want A to equal 0. 65(A) - 65 = 0
-    let yVal = val.substring(1);
+    const xVal: number = val.charCodeAt(0) - 65; // 65 is ASCII A, and we want A to equal 0. 65(A) - 65 = 0
+    const yVal = val.substring(1);
     return [xVal, yVal];
   }
 
