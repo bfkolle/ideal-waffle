@@ -61,12 +61,12 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.board = [];
-    for(let i = 0; i < 8; i++)
+    for (let i = 0; i < 8; i++)
     {
       this.board[i] = [];
-      for(let j = 0; j < 8; j++)
+      for (let j = 0; j < 8; j++)
       {
-        this.board[i][j] = i+j;
+        this.board[i][j] = i + j;
       }
     }
 
