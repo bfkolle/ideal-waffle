@@ -22,6 +22,14 @@ export class BoardComponent implements OnInit {
     this.board = this.setupBoard();
   }
 
+  private decodeCoords(val:string)
+  {
+    let xVal:number = val.charCodeAt(0);
+    xVal -= 65; // 65 is ASCII A, and we want A to equal 0. 65(A) - 65 = 0
+    let yVal = val.substring(1);
+    return [xVal, yVal];
+  }
+
   private generateBackRow(color: string): Piece[] {
     return BACK_ROW_PIECES.map((piece, index) => {
       const location = color === 'white'
