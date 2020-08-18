@@ -6,7 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  currentPiece = 'pawn'; // This is for testing, plan on this being dynamic
-  currentColor = 'black'; // This is for testing, plan on this being dynamic
   title = 'frontend';
 }

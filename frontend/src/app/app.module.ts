@@ -8,11 +8,13 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 
 import { PieceComponent } from './components/piece/piece.component';
+import { BoardComponent } from './components/board/board.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PieceComponent
+    PieceComponent,
+    BoardComponent
   ],
   imports: [
     BrowserModule,
