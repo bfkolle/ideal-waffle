@@ -55,23 +55,10 @@ export class BoardComponent implements OnInit {
   // currentPiece = 'pawn'; // This is for testing, plan on this being dynamic
   // currentColor = 'black'; // This is for testing, plan on this being dynamic
 
-  board: number[][];
-
   constructor(
   ) { }
 
   ngOnInit(): void {
-
-    this.board = [];
-    for(let i = 0; i < 8; i++)
-    {
-      this.board[i] = [];
-      for(let j = 0; j < 8; j++)
-      {
-        this.board[i][j] = i+j;
-      }
-    }
-
     this.chessPieces = defaultChessBoard();
   }
 }

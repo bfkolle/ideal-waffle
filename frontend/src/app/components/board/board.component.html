@@ -1,12 +1,4 @@
 <div class="boardDiv">
-    <div>
-        <div *ngFor="let row of board">
-            <div *ngFor="let tile of row;" style="float: left;">
-                <div *ngIf="tile%2==0" class="whiteTile"></div>
-                <div *ngIf="tile%2!=0" class="blackTile"></div>
-            </div>
-        </div>
-    </div>
-    <!-- <img src='assets/png/board.png' /> -->
+    <img src='assets/png/board.png' />
     <!-- <app-piece [color]="currentColor" [piece]="currentPiece"></app-piece> -->
 </div>
