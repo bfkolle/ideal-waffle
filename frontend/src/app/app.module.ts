@@ -10,11 +10,16 @@ import {MatIconModule} from '@angular/material/icon';
 import { PieceComponent } from './components/piece/piece.component';
 import { BoardComponent } from './components/board/board.component';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { MyDialogComponent } from './my-dialog/my-dialog.component';
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
     PieceComponent,
-    BoardComponent
+    BoardComponent,
+    MyDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +27,8 @@ import { BoardComponent } from './components/board/board.component';
     BrowserAnimationsModule,
     HttpClientModule,
     MatIconModule,
+    MatDialogModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
