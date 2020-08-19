@@ -28,6 +28,7 @@ io.on('connection', (socket) => {
 			activePlayers.push(userName);
 		}
 
+		console.log(userName);
 	});
 
 	socket.on('testingMessage', (someStuff) => {

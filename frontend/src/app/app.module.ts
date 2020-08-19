@@ -14,6 +14,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MyDialogComponent } from './my-dialog/my-dialog.component';
 import { FormsModule } from '@angular/forms';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +32,8 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     MatIconModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+	SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]
