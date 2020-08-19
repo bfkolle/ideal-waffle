@@ -10,10 +10,10 @@ var allClients = [];
 var activePlayers = [];
 
 // setup
-app.use(express.static('.'));
+app.use(express.static("../frontend/dist/frontend"));
 
 app.get('/', (req, res) => {   
-	res.send('Hello World!');
+	res.sendFile("index.html");
 });
 
 // everything socket io related
