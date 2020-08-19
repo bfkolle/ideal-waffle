@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { PieceComponent } from './components/piece/piece.component';
 import { BoardComponent } from './components/board/board.component';
@@ -22,6 +23,7 @@ import { BoardComponent } from './components/board/board.component';
     BrowserAnimationsModule,
     HttpClientModule,
     MatIconModule,
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
