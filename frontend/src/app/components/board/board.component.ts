@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Piece, PieceMove } from './../../models/piece';
 import { BoardTile } from './../../models/board';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 const BACK_ROW_PIECES: string[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
 
@@ -28,6 +29,26 @@ export class BoardComponent implements OnInit {
     // } else {
     return false;
     // }
+  }
+
+  public movePiece(event): void {
+    console.log('event', event);
+    if (event.previousContainer === event.container) {
+      // Add replace and 'kill' piece logic here
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      // This code needs reworking to fix current bug
+      const [xVal, yVal] = this.decodeCoords(event.container.data.tileLocation);
+      this.board[yVal][xVal] = event.container.data;
+      console.log('xVal', xVal, 'yVal', yVal);
+      console.log(this.board);
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
   }
 
   private decodeCoords(val: string)
@@ -95,11 +116,13 @@ export class BoardComponent implements OnInit {
         if (tile % 2 === 0) {
           return {
             piece: this.chessPieces[rowIndex][tileIndex],
+            tileLocation: `${String.fromCharCode(65 + tileIndex)}${rowIndex + 1}`,
             isWhiteTile: true,
           };
         } else {
           return {
             piece: this.chessPieces[rowIndex][tileIndex],
+            tileLocation: `${String.fromCharCode(65 + tileIndex)}${rowIndex + 1}`,
             isWhiteTile: false,
           };
         }

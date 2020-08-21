@@ -8,7 +8,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./piece.component.css']
 })
 export class PieceComponent implements OnInit {
-  // location: string;
   @Input() piece: string;
   @Input() color: string;
 

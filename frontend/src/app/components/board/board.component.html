@@ -1,15 +1,21 @@
-<div class="boardDiv">
+<div class="boardDiv" cdkDropListGroup>
     <div *ngFor="let row of board">
         <div *ngFor="let tile of row" class="boardRow">
-            <div *ngIf="tile.isWhiteTile" class="whiteTile">
-                <div *ngIf="tile.piece">
-                    <app-piece [color]="tile.piece.color" [piece]="tile.piece.type"></app-piece>
-                </div>
+            <div
+                cdkDropList
+                class="whiteTile"
+                *ngIf="tile.isWhiteTile" 
+                [cdkDropListData]="tile"
+                (cdkDropListDropped)="movePiece($event)">
+                <app-piece *ngIf="tile.piece" [color]="tile.piece.color" [piece]="tile.piece.type"></app-piece>
             </div>
-            <div *ngIf="!tile.isWhiteTile" class="blackTile">
-                <div *ngIf="tile.piece">
-                    <app-piece [color]="tile.piece.color" [piece]="tile.piece.type"></app-piece>
-                </div>
+            <div
+                cdkDropList
+                class="blackTile" 
+                *ngIf="!tile.isWhiteTile" 
+                [cdkDropListData]="tile"
+                (cdkDropListDropped)="movePiece($event)">
+                <app-piece *ngIf="tile.piece" [color]="tile.piece.color" [piece]="tile.piece.type"></app-piece>
             </div>
         </div>
     </div>
