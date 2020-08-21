@@ -32,30 +32,21 @@ export class BoardComponent implements OnInit {
   }
 
   public movePiece(event): void {
-    console.log('event', event);
-    if (event.previousContainer === event.container) {
+    if (event.previousContainer === event.container)
       return;
-    } else {
-      // This code needs reworking to fix current bug
-      const [xVal, yVal] = this.decodeCoords(event.container.data.tileLocation);
+    else {
+      const [xValNew, yValNew] = this.decodeCoords(event.container.data.tileLocation);
+      const [xValOld, yValOld] = this.decodeCoords(event.previousContainer.data.tileLocation);
 
-      this.board[yVal][xVal].piece = event.container.data.piece;
-      console.log('xVal', xVal, 'yVal', yVal);
-      console.log(this.board);
-
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
+      this.board[yValOld][xValOld].piece = undefined;
     }
   }
 
   private decodeCoords(val: string)
   {
     const xVal: number = val.charCodeAt(0) - 65; // 65 is ASCII A, and we want A to equal 0. 65(A) - 65 = 0
-    const yVal = val.substring(1);
+    const yVal: number = parseInt(val.substring(1)) - 1;
     return [xVal, yVal];
   }
 
