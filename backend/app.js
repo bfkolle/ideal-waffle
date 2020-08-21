@@ -9,12 +9,18 @@ var io = require('socket.io')(server);
 var allClients = [];
 var activePlayers = [];
 
-// setup
-app.use(express.static("../frontend/dist/frontend"));
-
-app.get('/', (req, res) => {   
-	res.sendFile("index.html");
-});
+if (process.env.NODE_ENV) {
+	// setup for production
+	app.use(express.static("../frontend/dist/frontend"));
+	
+	app.get('/', (req, res) => {   
+		res.sendFile("index.html");
+	});
+} else {
+	app.get('/', (req, res) => {
+		res.send('Backend is working');
+	});
+}
 
 // everything socket io related
 io.on('connection', (socket) => {

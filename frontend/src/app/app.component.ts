@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MyDialogComponent } from './my-dialog/my-dialog.component';
+import { MyDialogComponent } from './components/my-dialog/my-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -8,16 +8,17 @@ import { MyDialogComponent } from './my-dialog/my-dialog.component';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-
+  title = 'Chessborne';
   username: string;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.openDialog();
   }
 
-  openDialog(): void {
+  public openDialog(): void {
     const dialogRef = this.dialog.open(MyDialogComponent, {
       data: {username: this.username}
     });
@@ -26,6 +27,4 @@ export class AppComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-
-  title = 'frontend';
 }
