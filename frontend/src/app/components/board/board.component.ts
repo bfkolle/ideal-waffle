@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Piece } from './../../models/piece';
+import { Piece, PieceMove } from './../../models/piece';
 import { BoardTile } from './../../models/board';
 
 const BACK_ROW_PIECES: string[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
@@ -20,6 +20,14 @@ export class BoardComponent implements OnInit {
     this.boardPattern = this.setupBoardPattern();
     this.chessPieces = this.defaultChessBoard();
     this.board = this.setupBoard();
+  }
+
+  private sendMove(pieceMove: PieceMove): boolean {
+    // if (moveValid(pieceMove)) { // Temporary, move validity logic check would go here
+      // return this.socket.emit('sendMove', );
+    // } else {
+    return false;
+    // }
   }
 
   private decodeCoords(val: string)
