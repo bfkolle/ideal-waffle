@@ -1,7 +1,6 @@
 export interface Piece {
     type: string;
     color: string;
-    location: string;
 }
 
 export interface PieceMove {

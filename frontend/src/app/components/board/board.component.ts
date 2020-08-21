@@ -59,28 +59,18 @@ export class BoardComponent implements OnInit {
   }
 
   private generateBackRow(color: string): Piece[] {
-    return BACK_ROW_PIECES.map((piece, index) => {
-      const location = color === 'white'
-      ? `${String.fromCharCode(65 + index)}1`
-      : `${String.fromCharCode(65 + index)}8`;
-      return {
+    return BACK_ROW_PIECES.map(piece => ({
         type: piece,
         color,
-        location,
-      };
-    });
+    }));
   }
 
   private generatePawnRow(color: string): Piece[] {
     const pawnRow: Piece[] = [];
     for (let index = 0; index < 8; index++) {
-      const location = color === 'white'
-      ? `${String.fromCharCode(65 + index)}2`
-      : `${String.fromCharCode(65 + index)}7`;
       pawnRow.push({
         type: 'pawn',
         color,
-        location
       });
     }
     return pawnRow;
