@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Title } from '@angular/platform-browser';
 import { MyDialogComponent } from './components/my-dialog/my-dialog.component';
 
 @Component({
@@ -12,14 +11,12 @@ export class AppComponent implements OnInit {
   title = 'Chessborne';
   username: string;
 
-  constructor(public dialog: MatDialog, private titleService: Title) {
+  constructor(public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.titleService.setTitle(this.title);
     this.openDialog();
   }
-
 
   public openDialog(): void {
     const dialogRef = this.dialog.open(MyDialogComponent, {

@@ -1,4 +1,4 @@
-import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -36,9 +36,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     FormsModule,
     SocketIoModule.forRoot(config)
   ],
-  providers: [
-    Title,
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
