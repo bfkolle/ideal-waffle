@@ -34,14 +34,15 @@ export class BoardComponent implements OnInit {
   public movePiece(event): void {
     console.log('event', event);
     if (event.previousContainer === event.container) {
-      // Add replace and 'kill' piece logic here
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      return;
     } else {
       // This code needs reworking to fix current bug
       const [xVal, yVal] = this.decodeCoords(event.container.data.tileLocation);
-      this.board[yVal][xVal] = event.container.data;
+
+      this.board[yVal][xVal].piece = event.container.data.piece;
       console.log('xVal', xVal, 'yVal', yVal);
       console.log(this.board);
+
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
