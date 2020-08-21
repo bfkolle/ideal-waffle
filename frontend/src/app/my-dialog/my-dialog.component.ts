@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Socket } from 'ngx-socket-io';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 @Component({
   selector: 'app-my-dialog',
@@ -12,17 +12,18 @@ import { Socket } from 'ngx-socket-io';
 })
 export class MyDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<MyDialogComponent>,
-	private socket: Socket,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    public dialogRef: MatDialogRef<MyDialogComponent>,
+    private socket: Socket,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   ngOnInit(): void {
   }
 
-  save(){
+  save(): void {
     this.dialogRef.close();
-    console.log("Username is " + this.data.username);
-	this.socket.emit('addUser', this.data.username);
+    console.log('Username is ' + this.data.username);
+    this.socket.emit('addUser', this.data.username);
   }
-
 }

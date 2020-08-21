@@ -15,8 +15,7 @@ export class PieceComponent implements OnInit {
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.matIconRegistry.addSvgIcon(
