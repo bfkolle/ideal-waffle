@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Piece } from './../../models/piece';
+import { Piece, PieceMove } from './../../models/piece';
 import { BoardTile } from './../../models/board';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 const BACK_ROW_PIECES: string[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
 
@@ -22,36 +23,46 @@ export class BoardComponent implements OnInit {
     this.board = this.setupBoard();
   }
 
+  private sendMove(pieceMove: PieceMove): boolean {
+    // if (moveValid(pieceMove)) { // Temporary, move validity logic check would go here
+      // return this.socket.emit('sendMove', );
+    // } else {
+    return false;
+    // }
+  }
+
+  public movePiece(event): void {
+    if (event.previousContainer === event.container)
+      return;
+    else {
+      const [xValNew, yValNew] = this.decodeCoords(event.container.data.tileLocation);
+      const [xValOld, yValOld] = this.decodeCoords(event.previousContainer.data.tileLocation);
+
+      this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
+      this.board[yValOld][xValOld].piece = undefined;
+    }
+  }
+
   private decodeCoords(val: string)
   {
     const xVal: number = val.charCodeAt(0) - 65; // 65 is ASCII A, and we want A to equal 0. 65(A) - 65 = 0
-    const yVal = val.substring(1);
+    const yVal: number = parseInt(val.substring(1)) - 1;
     return [xVal, yVal];
   }
 
   private generateBackRow(color: string): Piece[] {
-    return BACK_ROW_PIECES.map((piece, index) => {
-      const location = color === 'white'
-      ? `${String.fromCharCode(65 + index)}1`
-      : `${String.fromCharCode(65 + index)}8`;
-      return {
+    return BACK_ROW_PIECES.map(piece => ({
         type: piece,
         color,
-        location,
-      };
-    });
+    }));
   }
 
   private generatePawnRow(color: string): Piece[] {
     const pawnRow: Piece[] = [];
     for (let index = 0; index < 8; index++) {
-      const location = color === 'white'
-      ? `${String.fromCharCode(65 + index)}2`
-      : `${String.fromCharCode(65 + index)}7`;
       pawnRow.push({
         type: 'pawn',
         color,
-        location
       });
     }
     return pawnRow;
@@ -87,11 +98,13 @@ export class BoardComponent implements OnInit {
         if (tile % 2 === 0) {
           return {
             piece: this.chessPieces[rowIndex][tileIndex],
+            tileLocation: `${String.fromCharCode(65 + tileIndex)}${rowIndex + 1}`,
             isWhiteTile: true,
           };
         } else {
           return {
             piece: this.chessPieces[rowIndex][tileIndex],
+            tileLocation: `${String.fromCharCode(65 + tileIndex)}${rowIndex + 1}`,
             isWhiteTile: false,
           };
         }
