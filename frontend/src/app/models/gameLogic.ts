@@ -73,22 +73,37 @@ export class gameLogic {
                 break;
             }
             case 'bishop': {
-                if(false) // I spent too much time thinking of this conditional and couldn't get it, sorry
+				
+				let xDelta = Math.abs(xValOld-xValNew);
+                let yDelta = Math.abs(yValOld-yValNew);
+				
+                if(xDelta == yDelta) 
                 {
                     return true;
                 }
+				break;
             }
             case 'knight': {
-                if(false) // I'm not even attempting this one
+				
+				let xDelta = Math.abs(xValOld-xValNew);
+                let yDelta = Math.abs(yValOld-yValNew);
+				
+                if(xDelta == 1 && yDelta == 2 || xDelta == 2 && yDelta == 1) 
                 {
                     return true;
                 }
+				break;
             }
             case 'queen': {
-                if(false) // Diagonally or horizontally or vertically (Basically a rook or a bishop)
-                {         // (The pieceBetweenMove() will fail if it moves through a piece)
+				
+				let xDelta = Math.abs(xValOld-xValNew);
+                let yDelta = Math.abs(yValOld-yValNew);
+				
+                if(xDelta == yDelta || (yValOld == yValNew || xValOld == xValNew)) 
+                {         
                     return true;
                 }
+				break;
             }
         }
     }
