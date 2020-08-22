@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Piece, PieceMove } from './../../models/piece';
 import { BoardTile } from './../../models/board';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 const BACK_ROW_PIECES: string[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
 
@@ -32,8 +31,9 @@ export class BoardComponent implements OnInit {
   }
 
   public movePiece(event): void {
-    if (event.previousContainer === event.container)
+    if (event.previousContainer === event.container) {
       return;
+    }
     else {
       const [xValNew, yValNew] = this.decodeCoords(event.container.data.tileLocation);
       const [xValOld, yValOld] = this.decodeCoords(event.previousContainer.data.tileLocation);
@@ -43,7 +43,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  private decodeCoords(val: string)
+  private decodeCoords(val: string): number[]
   {
     const xVal: number = val.charCodeAt(0) - 65; // 65 is ASCII A, and we want A to equal 0. 65(A) - 65 = 0
     const yVal: number = parseInt(val.substring(1)) - 1;
