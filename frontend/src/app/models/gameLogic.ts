@@ -8,7 +8,6 @@ export class gameLogic {
         // else
         let capturedPiece: Piece;
 
-        console.log(board);
         if(board[yValNew][xValNew].piece != undefined)
             capturedPiece = board[yValNew][xValNew].piece;
 
@@ -26,9 +25,35 @@ export class gameLogic {
 
         switch(piece.type) {
             case 'pawn': {
-                if(Math.abs(yValOld-yValNew)==1 && (xValOld == xValNew)) { // THIS DOESNT TAKE INTO ACCOUNT PAWN CAPTURING DIAGONALLY
-                    return true;                                       // THIS ALSO DOESNT TAKE INTO ACCOUNT A PAWN CAN MOVE TWO SPACES IN ITS FIRST MOVE
+                // Each color's piece to only move forward
+                if(piece.color == 'black' && yValNew < yValOld || piece.color == 'white' && yValNew > yValOld) {
+                    
+                    // This deals with non-capturing, only move 1-2 spaces forward
+                    if(xValOld == xValNew) {
+                        // Black pawns moving 2 spaces
+                        if(piece.color == 'black' && yValOld == 6 && yValNew == 4){
+                            return true;
+                        }
+
+                        // White pawns moving 2 spaces
+                        if(piece.color == 'white' && yValOld == 1 && yValNew == 3){
+                            return true;
+                        }
+                        
+                        // THIS DOESNT TAKE INTO ACCOUNT PAWN CAPTURING DIAGONALLY
+                        if(Math.abs(yValOld-yValNew)==1) { 
+                            return true;
+                        }
+                    }
+                    else {
+                        // Check if diagonal move is valid, then if a piece is there
+                        if(Math.abs(xValOld-xValNew) == 1 && Math.abs(yValOld-yValNew) == 1 && board[yValNew][xValNew].piece != undefined) {
+                            return true;
+                        }
+                    }
+                    
                 }
+                break;
             }
             case 'king': {
                 let xDelta = Math.abs(xValOld-xValNew);
@@ -36,16 +61,16 @@ export class gameLogic {
                 
                 if(xDelta <= 1 && yDelta <= 1)
                 {
-                    console.log("Here");
-                    return true;
+                    return true;   
                 }
-                return false;
+                break;
             }
             case 'rook': {
                 if(yValOld == yValNew || xValOld == xValNew)
                 {
                     return true;
                 }
+                break;
             }
             case 'bishop': {
                 if(false) // I spent too much time thinking of this conditional and couldn't get it, sorry
@@ -66,6 +91,5 @@ export class gameLogic {
                 }
             }
         }
-        return false;
     }
 }
