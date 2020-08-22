@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Piece, PieceMove } from './../../models/piece';
 import { BoardTile } from './../../models/board';
+import { gameLogic } from '../../models/gameLogic';
 
 const BACK_ROW_PIECES: string[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
 
@@ -38,8 +39,17 @@ export class BoardComponent implements OnInit {
       const [xValNew, yValNew] = this.decodeCoords(event.container.data.tileLocation);
       const [xValOld, yValOld] = this.decodeCoords(event.previousContainer.data.tileLocation);
 
-      this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
-      this.board[yValOld][xValOld].piece = undefined;
+       if(gameLogic.isValidMove(this.board[yValOld][xValOld].piece, this.board, yValOld, xValOld, yValNew, xValNew))
+      {
+        this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
+        this.board[yValOld][xValOld].piece = undefined;
+      }
+      else
+      {
+        this.board[yValOld][xValOld].piece = event.previousContainer.data.piece;
+        this.board[yValNew][xValNew].piece = undefined;
+
+      }
     }
   }
 
