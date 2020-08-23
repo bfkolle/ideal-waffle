@@ -43,12 +43,8 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  private sendMove(pieceMove: PieceMove): boolean {
-    // if (moveValid(pieceMove)) { // Temporary, move validity logic check would go here
-      // return this.socket.emit('sendMove', );
-    // } else {
-    return false;
-    // }
+  private sendMove(): void {
+    this.socket.emit('makeMove', this.board);
   }
 
   public movePiece(event): void {
@@ -69,6 +65,7 @@ export class BoardComponent implements OnInit {
         this.board[yValOld][xValOld].piece = event.previousContainer.data.piece;
       }
     }
+    this.sendMove();
   }
 
   private decodeCoords(val: string): number[]
@@ -144,8 +141,8 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  startGame() {
-    this.socket.emit("startGame");
+  startGame(): void  {
+    this.socket.emit('startGame');
   }
 
 }

@@ -23,8 +23,8 @@ export class MyDialogComponent implements OnInit {
 
   save(): void {
     this.dialogRef.close();
-    if (this.data.username == undefined){
-      this.data.username = "guest";
+    if (this.data.username === undefined){
+      this.data.username = 'guest';
     }
     console.log('Username is ' + this.data.username);
     this.socket.emit('addUser', this.data.username);
