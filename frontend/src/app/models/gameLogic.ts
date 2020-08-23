@@ -1,7 +1,5 @@
 import { Piece } from './piece';
 import { BoardTile } from './board';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
-import { getDefaultSettings } from 'http2';
 
 export class gameLogic {
     static isValidMove(piece: Piece, board: BoardTile[][], 
@@ -19,9 +17,6 @@ export class gameLogic {
             console.log('Can\'t capture your own pieces!');
             return false;
         }
-
-        // if pieceBetweenMove()
-        // "Can't move past pieces!"
 
         if (checkValidation) {
             if(this.moveCausesCheck(piece, board, yValOld, xValOld, yValNew, xValNew)) {
@@ -102,6 +97,21 @@ export class gameLogic {
             case 'rook': {
                 if (yValOld === yValNew || xValOld === xValNew)
                 {
+                    if (yValNew - yValOld > 0)
+                    {
+                        for (let i: number = yValOld + 1; i < yValNew; i++) {
+                            if(board[i][xValOld].piece != undefined)
+                                return false;
+                        }
+                    }
+                    else
+                    {
+                        for (let i: number = yValOld - 1; i > yValNew; i--) {
+                            if(board[i][xValOld].piece != undefined)
+                                return false;
+                        }
+                    }
+
                     return true;
                 }
                 break;
