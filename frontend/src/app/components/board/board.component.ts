@@ -47,8 +47,6 @@ export class BoardComponent implements OnInit {
       else
       {
         this.board[yValOld][xValOld].piece = event.previousContainer.data.piece;
-        this.board[yValNew][xValNew].piece = undefined;
-
       }
     }
   }
