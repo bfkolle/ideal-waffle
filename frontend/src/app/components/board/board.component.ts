@@ -18,7 +18,9 @@ export class BoardComponent implements OnInit {
   chessPieces: Array<Array<Piece>> = [];
   boardPattern: number[][] = [];
   board: BoardTile[][] = [];
-  isTurn: Boolean = false;
+  isTurn = false;
+  // TEMPORARY: being set to white is temporary, plan on the BE handling that value @Jace
+  playerColor: string = 'white';
 
   constructor(private socket: Socket) { }
 
@@ -71,6 +73,7 @@ export class BoardComponent implements OnInit {
     return BACK_ROW_PIECES.map(piece => ({
         type: piece,
         color,
+        isDraggable: this.playerColor === color,
     }));
   }
 
@@ -80,6 +83,7 @@ export class BoardComponent implements OnInit {
       pawnRow.push({
         type: 'pawn',
         color,
+        isDraggable: this.playerColor === color,
       });
     }
     return pawnRow;
