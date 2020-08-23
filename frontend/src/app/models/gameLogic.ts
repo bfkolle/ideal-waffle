@@ -1,15 +1,11 @@
 import { Piece } from './piece';
 import { BoardTile } from './board';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
+import { getDefaultSettings } from 'http2';
 
-export default class GameLogic {
-    static isValidMove(
-        piece: Piece,
-        board: BoardTile[][],
-        yValOld: number,
-        xValOld: number,
-        yValNew: number,
-        xValNew: number
-    ): boolean {
+export class gameLogic {
+    static isValidMove(piece: Piece, board: BoardTile[][], 
+                       yValOld: number, xValOld: number, yValNew: number, xValNew: number, checkValidation: boolean) {
         // if !inCheckState
         // else
         let capturedPiece: Piece;
@@ -27,8 +23,12 @@ export default class GameLogic {
         // if pieceBetweenMove()
         // "Can't move past pieces!"
 
-        // if moveCausesCheck()
-        // "Can't put yourself into check!"
+        if (checkValidation) {
+            if(this.moveCausesCheck(piece, board, yValOld, xValOld, yValNew, xValNew)) {
+                console.log("Can't place yourself in check");
+                return false;
+            }
+        }
 
         switch (piece.type) {
             case 'pawn': {
@@ -135,6 +135,51 @@ export default class GameLogic {
                     return true;
                 }
                 break;
+            }
+        }
+
+        return false;
+    }
+
+    static moveCausesCheck(piece: Piece, board: BoardTile[][], yValOld: number, xValOld: number, yValNew: number, xValNew: number): boolean {
+        if(this.isValidMove(piece, board, yValOld, xValOld, yValNew, xValNew, false)) {
+            let tempPiece: Piece = board[yValNew][xValNew].piece;
+            board[yValNew][xValNew].piece = board[yValOld][xValOld].piece;
+            board[yValOld][xValOld].piece = undefined;
+            
+            let color: string = board[yValNew][xValNew].piece.color;
+            let kingCoords: number[] = this.findKingLocation(color, board);
+            let xValKing: number = kingCoords[0];
+            let yValKing: number = kingCoords[1];
+
+            for (let i: number = 0; i < 8; i++) {
+                for (let j: number = 0; j < 8; j++) {
+                    let temp2Piece: Piece = board[i][j].piece;
+
+                    if (temp2Piece != undefined && temp2Piece.color != color && this.isValidMove(temp2Piece, board, i, j, yValKing, xValKing, true)) {
+                        board[yValOld][xValOld].piece = board[yValNew][xValNew].piece;
+                        board[yValNew][xValNew].piece = tempPiece;
+                        return true;
+                    }
+                }
+            }
+            
+            board[yValOld][xValOld].piece = board[yValNew][xValNew].piece;
+            board[yValNew][xValNew].piece = tempPiece;
+            return false;
+        }
+
+        return false;
+    }
+
+    static findKingLocation(color: string, board: BoardTile[][]): [number, number] {
+        for (let i: number = 0; i < 8; i++) {
+            for (let j: number = 0; j < 8; j++) {
+                let tempPiece: Piece = board[i][j].piece;
+
+                if (tempPiece != undefined && tempPiece.color === color && tempPiece.type === 'king') {
+                    return [j, i];
+                }
             }
         }
     }
