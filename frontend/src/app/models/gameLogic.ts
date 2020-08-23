@@ -1,9 +1,16 @@
 import { Piece } from './piece';
 import { BoardTile } from './board';
 
-export class gameLogic {
-    static isValidMove(piece: Piece, board: BoardTile[][],
-                       yValOld: number, xValOld: number, yValNew: number, xValNew: number, checkValidation: boolean) {
+export default class GameLogic {
+    static isValidMove(
+        piece: Piece,
+        board: BoardTile[][],
+        yValOld: number,
+        xValOld: number,
+        yValNew: number,
+        xValNew: number,
+        checkValidation: boolean,
+    ): boolean {
         // if !inCheckState
         // else
         let capturedPiece: Piece;
@@ -245,7 +252,6 @@ export class gameLogic {
                     }
                 }
             }
-
             board[yValOld][xValOld].piece = board[yValNew][xValNew].piece;
             board[yValNew][xValNew].piece = tempPiece;
             return false;
