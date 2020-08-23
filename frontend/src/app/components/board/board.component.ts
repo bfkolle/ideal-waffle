@@ -130,4 +130,9 @@ export class BoardComponent implements OnInit {
       });
     });
   }
+
+  startGame() {
+    this.socket.emit("startGame");
+  }
+
 }
