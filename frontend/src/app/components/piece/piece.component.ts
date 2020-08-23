@@ -18,7 +18,6 @@ export class PieceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.color, this.isDraggable);
     this.matIconRegistry.addSvgIcon(
       this.piece,
       this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/svg/${this.piece}-${this.color}.svg`));
