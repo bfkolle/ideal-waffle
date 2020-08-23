@@ -2,7 +2,7 @@ import { Piece } from './piece';
 import { BoardTile } from './board';
 
 export class gameLogic {
-    static isValidMove(piece: Piece, board: BoardTile[][], 
+    static isValidMove(piece: Piece, board: BoardTile[][],
                        yValOld: number, xValOld: number, yValNew: number, xValNew: number, checkValidation: boolean) {
         // if !inCheckState
         // else
@@ -19,8 +19,8 @@ export class gameLogic {
         }
 
         if (checkValidation) {
-            if(this.moveCausesCheck(piece, board, yValOld, xValOld, yValNew, xValNew)) {
-                console.log("Can't place yourself in check");
+            if (this.moveCausesCheck(piece, board, yValOld, xValOld, yValNew, xValNew)) {
+                console.log('Can\'t place yourself in check');
                 return false;
             }
         }
@@ -100,15 +100,17 @@ export class gameLogic {
                     if (yValNew - yValOld > 0)
                     {
                         for (let i: number = yValOld + 1; i < yValNew; i++) {
-                            if(board[i][xValOld].piece != undefined)
+                            if (board[i][xValOld].piece != undefined) {
                                 return false;
+                            }
                         }
                     }
                     else
                     {
                         for (let i: number = yValOld - 1; i > yValNew; i--) {
-                            if(board[i][xValOld].piece != undefined)
+                            if (board[i][xValOld].piece != undefined) {
                                 return false;
+                            }
                         }
                     }
 
@@ -122,26 +124,28 @@ export class gameLogic {
 
                 if (xDelta === yDelta)
                 {
-                    const xVal = xValOld;
-                    
-                    if(xValNew - xValOld > 0)
+                    let xVal = xValOld;
+
+                    if (xValNew - xValOld > 0)
                     {
                         if (yValNew - yValOld > 0)
                         {
                             for (let i: number = yValOld + 1; i < yValNew; i++) {
-                                if(board[i][xVal].piece != undefined)
+                                if (board[i][xVal].piece != undefined) {
                                     return false;
-                                
-                                    xVal++;
+                                }
+
+                                xVal++;
                             }
                         }
                         else
                         {
                             for (let i: number = yValOld - 1; i > yValNew; i--) {
-                                if(board[i][xVal].piece != undefined)
+                                if (board[i][xVal].piece != undefined) {
                                     return false;
+                                }
 
-                                    xVal++;
+                                xVal++;
                             }
                         }
                     }
@@ -150,19 +154,21 @@ export class gameLogic {
                         if (yValNew - yValOld > 0)
                         {
                             for (let i: number = yValOld + 1; i < yValNew; i++) {
-                                if(board[i][xVal].piece != undefined)
+                                if (board[i][xVal].piece != undefined) {
                                     return false;
-                                
-                                    xVal--
+                                }
+
+                                xVal--;
                             }
                         }
                         else
                         {
                             for (let i: number = yValOld - 1; i > yValNew; i--) {
-                                if(board[i][xVal].piece != undefined)
+                                if (board[i][xVal].piece != undefined) {
                                     return false;
+                                }
 
-                                    xVal--
+                                xVal--;
                             }
                         }
                     }
@@ -197,19 +203,19 @@ export class gameLogic {
     }
 
     static moveCausesCheck(piece: Piece, board: BoardTile[][], yValOld: number, xValOld: number, yValNew: number, xValNew: number): boolean {
-        if(this.isValidMove(piece, board, yValOld, xValOld, yValNew, xValNew, false)) {
-            let tempPiece: Piece = board[yValNew][xValNew].piece;
+        if (this.isValidMove(piece, board, yValOld, xValOld, yValNew, xValNew, false)) {
+            const tempPiece: Piece = board[yValNew][xValNew].piece;
             board[yValNew][xValNew].piece = board[yValOld][xValOld].piece;
             board[yValOld][xValOld].piece = undefined;
-            
-            let color: string = board[yValNew][xValNew].piece.color;
-            let kingCoords: number[] = this.findKingLocation(color, board);
-            let xValKing: number = kingCoords[0];
-            let yValKing: number = kingCoords[1];
 
-            for (let i: number = 0; i < 8; i++) {
-                for (let j: number = 0; j < 8; j++) {
-                    let temp2Piece: Piece = board[i][j].piece;
+            const color: string = board[yValNew][xValNew].piece.color;
+            const kingCoords: number[] = this.findKingLocation(color, board);
+            const xValKing: number = kingCoords[0];
+            const yValKing: number = kingCoords[1];
+
+            for (let i = 0; i < 8; i++) {
+                for (let j = 0; j < 8; j++) {
+                    const temp2Piece: Piece = board[i][j].piece;
 
                     if (temp2Piece != undefined && temp2Piece.color != color && this.isValidMove(temp2Piece, board, i, j, yValKing, xValKing, true)) {
                         board[yValOld][xValOld].piece = board[yValNew][xValNew].piece;
@@ -218,7 +224,7 @@ export class gameLogic {
                     }
                 }
             }
-            
+
             board[yValOld][xValOld].piece = board[yValNew][xValNew].piece;
             board[yValNew][xValNew].piece = tempPiece;
             return false;
@@ -228,9 +234,9 @@ export class gameLogic {
     }
 
     static findKingLocation(color: string, board: BoardTile[][]): [number, number] {
-        for (let i: number = 0; i < 8; i++) {
-            for (let j: number = 0; j < 8; j++) {
-                let tempPiece: Piece = board[i][j].piece;
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                const tempPiece: Piece = board[i][j].piece;
 
                 if (tempPiece != undefined && tempPiece.color === color && tempPiece.type === 'king') {
                     return [j, i];
