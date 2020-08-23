@@ -40,22 +40,23 @@ export default class GameLogic {
                     // This deals with non-capturing, only move 1-2 spaces forward
                     if (xValOld === xValNew) {
                         // Black pawns moving 2 spaces
-                        if(piece.color == 'black' && yValOld == 6 && yValNew == 4 && board[5][xValOld].piece == undefined){
+                        if (piece.color == 'black' && yValOld == 6 && yValNew == 4 && board[5][xValOld].piece == undefined){
                             board[yValOld - 1][xValNew].isEnPassant = true;
                             return true;
                         }
 
                         // White pawns moving 2 spaces
-                        if(piece.color == 'white' && yValOld == 1 && yValNew == 3 && board[2][xValOld].piece == undefined){
+                        if (piece.color == 'white' && yValOld == 1 && yValNew == 3 && board[2][xValOld].piece == undefined){
                             board[yValNew - 1][xValNew].isEnPassant = true;
                             return true;
                         }
 
                         // THIS DOESNT TAKE INTO ACCOUNT PAWN CAPTURING DIAGONALLY
-                        if(Math.abs(yValOld-yValNew)==1) {
-                            if(board[yValNew][xValNew].piece != undefined)
+                        if (Math.abs(yValOld - yValNew) === 1) {
+                            if (board[yValNew][xValNew].piece !== undefined) {
                                 return false;
-                            if(board[yValOld - 1][xValNew].isEnPassant == true) {
+                            }
+                            if (board[yValOld - 1][xValNew].isEnPassant === true) {
                                 board[yValOld - 1][xValNew].isEnPassant = false;
                             }
                             else if (board[yValOld + 1][xValNew].isEnPassant === true) {
@@ -104,39 +105,43 @@ export default class GameLogic {
                 break;
             }
             case 'rook': {
-                if(yValOld == yValNew)
+                if (yValOld == yValNew)
                 {
                     if (xValNew - xValOld > 0)
                     {
                         for (let i: number = xValOld + 1; i < xValNew; i++) {
-                            if(board[yValOld][i].piece != undefined)
+                            if (board[yValOld][i].piece != undefined) {
                                 return false;
+                            }
                         }
                     }
                     else
                     {
                         for (let i: number = xValOld - 1; i > xValNew; i--) {
-                            if(board[yValOld][i].piece != undefined)
+                            if (board[yValOld][i].piece != undefined) {
                                 return false;
+                            }
                         }
                     }
-                    
+
                     return true;
                 }
-                else if(xValOld == xValNew)
+                else if (xValOld == xValNew)
                 {
                     if (yValNew - yValOld > 0)
                     {
                         for (let i: number = yValOld + 1; i < yValNew; i++) {
-                            if(board[i][xValOld].piece != undefined)
+                            if (board[i][xValOld].piece != undefined) {
                                 return false;
+                            }
                         }
                     }
                     else
                     {
                         for (let i: number = yValOld - 1; i > yValNew; i--) {
-                            if(board[i][xValOld].piece != undefined)
+                            if (board[i][xValOld].piece != undefined) {
                                 return false;
+                            }
                         }
                     }
 
