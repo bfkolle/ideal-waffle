@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class PieceComponent implements OnInit {
   @Input() piece: string;
   @Input() color: string;
+  @Input() isDraggable: boolean;
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -17,6 +18,7 @@ export class PieceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.color, this.isDraggable);
     this.matIconRegistry.addSvgIcon(
       this.piece,
       this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/svg/${this.piece}-${this.color}.svg`));
