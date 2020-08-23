@@ -3,6 +3,11 @@
     border-color: black;
 } */
 
+.startButton {
+    height: 50px;
+    width: 100px;
+}
+
 .boardRow {
     float: left;
 }
