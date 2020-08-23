@@ -68,11 +68,18 @@ export class gameLogic {
                             return true;
                         }
                         else if(Math.abs(xValOld-xValNew) == 1 && Math.abs(yValOld-yValNew) == 1 && board[yValNew][xValNew].isEnPassant == true) {
-                            if(board[yValNew - 1][xValNew].piece != undefined && board[yValNew - 1][xValNew].piece.type === 'pawn')
+                            if(board[yValNew - 1][xValNew].piece != undefined && board[yValNew - 1][xValNew].piece.type === 'pawn' && board[yValNew - 1][xValNew].piece.color != piece.color)
+                            {
                                 board[yValNew - 1][xValNew].piece = undefined;
-                            else if(board[yValNew + 1][xValNew].piece != undefined && board[yValNew + 1][xValNew].piece.type === 'pawn')
+                                return true;
+                            }
+                            else if(board[yValNew + 1][xValNew].piece != undefined && board[yValNew + 1][xValNew].piece.type === 'pawn' && board[yValNew + 1][xValNew].piece.color != piece.color)
+                            {
                                 board[yValNew + 1][xValNew].piece = undefined;
-                            return true;
+                                return true;
+                            }
+                                
+                            return false;
                         }
                     }
                     
