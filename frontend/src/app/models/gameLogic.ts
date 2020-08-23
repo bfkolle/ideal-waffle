@@ -33,48 +33,36 @@ export class gameLogic {
                         // Black pawns moving 2 spaces
                         if(piece.color == 'black' && yValOld == 6 && yValNew == 4){
                             board[yValOld - 1][xValNew].isEnPassant = true;
-                            console.log(board);
                             return true;
                         }
 
                         // White pawns moving 2 spaces
                         if(piece.color == 'white' && yValOld == 1 && yValNew == 3){
                             board[yValNew - 1][xValNew].isEnPassant = true;
-                            console.log(board);
                             return true;
                         }
                         
                         // THIS DOESNT TAKE INTO ACCOUNT PAWN CAPTURING DIAGONALLY
                         if(Math.abs(yValOld-yValNew)==1) {
                             if(board[yValOld - 1][xValNew].isEnPassant == true)
-                            {
-                                console.log('R');
                                 board[yValOld - 1][xValNew].isEnPassant = false;
-                            }
                             else if(board[yValOld + 1][xValNew].isEnPassant == true)
-                            {
-                                console.log('E');
                                 board[yValNew - 1][xValNew].isEnPassant = false;
-                            }
                             
-                            console.log(board);
                             return true;
                         }
                     }
                     else {
                         // Check if diagonal move is valid, then if a piece is there
-                        console.log(board[yValNew][xValNew]);
                         if(Math.abs(xValOld-xValNew) == 1 && Math.abs(yValOld-yValNew) == 1 && board[yValNew][xValNew].piece != undefined) {
                             return true;
                         }
                         else if(Math.abs(xValOld-xValNew) == 1 && Math.abs(yValOld-yValNew) == 1 && board[yValNew][xValNew].isEnPassant == true) {
-                            if(board[yValNew - 1][xValNew].piece != undefined && board[yValNew - 1][xValNew].piece.type === 'pawn' && board[yValNew - 1][xValNew].piece.color != piece.color)
-                            {
+                            if(board[yValNew - 1][xValNew].piece != undefined && board[yValNew - 1][xValNew].piece.type === 'pawn' && board[yValNew - 1][xValNew].piece.color != piece.color) {
                                 board[yValNew - 1][xValNew].piece = undefined;
                                 return true;
                             }
-                            else if(board[yValNew + 1][xValNew].piece != undefined && board[yValNew + 1][xValNew].piece.type === 'pawn' && board[yValNew + 1][xValNew].piece.color != piece.color)
-                            {
+                            else if(board[yValNew + 1][xValNew].piece != undefined && board[yValNew + 1][xValNew].piece.type === 'pawn' && board[yValNew + 1][xValNew].piece.color != piece.color) {
                                 board[yValNew + 1][xValNew].piece = undefined;
                                 return true;
                             }
