@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Piece, PieceMove } from './../../models/piece';
 import { BoardTile } from './../../models/board';
 import { gameLogic } from '../../models/gameLogic';
+import { GameData } from '../../services/gameData/game-data.service'
 
 const BACK_ROW_PIECES: string[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
 
@@ -14,8 +15,16 @@ export class BoardComponent implements OnInit {
   chessPieces: Array<Array<Piece>> = [];
   boardPattern: number[][] = [];
   board: BoardTile[][] = [];
+  
+  public data = {}; // THIS IS USED FOR SERVICES
+  username: string;
 
-  constructor() { }
+  constructor(private gameData: GameData) {
+    this.gameData.getUsername$.subscribe((data) => {
+        this.data = data;
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.boardPattern = this.setupBoardPattern();
@@ -32,6 +41,7 @@ export class BoardComponent implements OnInit {
   }
 
   public movePiece(event): void {
+    console.log(this.data);
     if (event.previousContainer === event.container) {
       return;
     }
