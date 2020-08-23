@@ -150,6 +150,51 @@ export default class GameLogic {
 
                 if (xDelta === yDelta)
                 {
+                    const xVal = xValOld;
+                    
+                    if(xValNew - xValOld > 0)
+                    {
+                        if (yValNew - yValOld > 0)
+                        {
+                            for (let i: number = yValOld + 1; i < yValNew; i++) {
+                                if(board[i][xVal].piece != undefined)
+                                    return false;
+                                
+                                    xVal++;
+                            }
+                        }
+                        else
+                        {
+                            for (let i: number = yValOld - 1; i > yValNew; i--) {
+                                if(board[i][xVal].piece != undefined)
+                                    return false;
+
+                                    xVal++;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (yValNew - yValOld > 0)
+                        {
+                            for (let i: number = yValOld + 1; i < yValNew; i++) {
+                                if(board[i][xVal].piece != undefined)
+                                    return false;
+                                
+                                    xVal--
+                            }
+                        }
+                        else
+                        {
+                            for (let i: number = yValOld - 1; i > yValNew; i--) {
+                                if(board[i][xVal].piece != undefined)
+                                    return false;
+
+                                    xVal--
+                            }
+                        }
+                    }
+
                     return true;
                 }
                 break;
