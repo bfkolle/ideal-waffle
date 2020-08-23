@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Piece, PieceMove } from './../../models/piece';
 import { BoardTile } from './../../models/board';
 import { gameLogic } from '../../models/gameLogic';
+import { Socket } from 'ngx-socket-io';
 
 const BACK_ROW_PIECES: string[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
 
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -14,13 +18,18 @@ export class BoardComponent implements OnInit {
   chessPieces: Array<Array<Piece>> = [];
   boardPattern: number[][] = [];
   board: BoardTile[][] = [];
+  isTurn: Boolean = false;
 
-  constructor() { }
+  constructor(private socket: Socket) { }
 
   ngOnInit(): void {
     this.boardPattern = this.setupBoardPattern();
     this.chessPieces = this.defaultChessBoard();
     this.board = this.setupBoard();
+
+    this.socket.on('yourTurn', () => {
+      this.isTurn = true;
+    });
   }
 
   private sendMove(pieceMove: PieceMove): boolean {

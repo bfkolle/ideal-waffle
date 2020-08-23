@@ -61,6 +61,7 @@ io.on('connection', (socket) => {
 			activePlayers.push(socket.id);
 			activePlayer = activePlayer[0]; //io.sockets.sockets[id] <- this gets a particular socket
 			io.emit('moveMade', gameState);
+			io.sockets.socket[activePlayer].emit('yourTurn');
 		}
 	});
 
@@ -76,6 +77,7 @@ io.on('connection', (socket) => {
 	socket.on('startGame', () => {
 		if (activePlayers.length == 2){
 			io.emit('gameStart');
+			io.sockets.sockets[activePlayer].emit('yourTurn');
 		}
 	});
 
