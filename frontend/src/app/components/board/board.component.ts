@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { Piece, PieceMove } from './../../models/piece';
 import { BoardTile } from './../../models/board';
-import { gameLogic } from '../../models/gameLogic';
+import GameLogic from '../../models/gameLogic';
 import { Socket } from 'ngx-socket-io';
 
 const BACK_ROW_PIECES: string[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
@@ -18,7 +18,9 @@ export class BoardComponent implements OnInit {
   chessPieces: Array<Array<Piece>> = [];
   boardPattern: number[][] = [];
   board: BoardTile[][] = [];
-  isTurn: Boolean = false;
+  isTurn = false;
+  // TEMPORARY: being set to white is temporary, plan on the BE handling that value @Jace
+  playerColor: string = 'white';
 
   constructor(private socket: Socket) { }
 
@@ -48,7 +50,7 @@ export class BoardComponent implements OnInit {
       const [xValNew, yValNew] = this.decodeCoords(event.container.data.tileLocation);
       const [xValOld, yValOld] = this.decodeCoords(event.previousContainer.data.tileLocation);
 
-       if(gameLogic.isValidMove(this.board[yValOld][xValOld].piece, this.board, yValOld, xValOld, yValNew, xValNew))
+      if (GameLogic.isValidMove(this.board[yValOld][xValOld].piece, this.board, yValOld, xValOld, yValNew, xValNew))
       {
         this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
         this.board[yValOld][xValOld].piece = undefined;
@@ -63,7 +65,7 @@ export class BoardComponent implements OnInit {
   private decodeCoords(val: string): number[]
   {
     const xVal: number = val.charCodeAt(0) - 65; // 65 is ASCII A, and we want A to equal 0. 65(A) - 65 = 0
-    const yVal: number = parseInt(val.substring(1)) - 1;
+    const yVal: number = parseInt(val.substring(1), 10) - 1;
     return [xVal, yVal];
   }
 
@@ -71,6 +73,7 @@ export class BoardComponent implements OnInit {
     return BACK_ROW_PIECES.map(piece => ({
         type: piece,
         color,
+        isDraggable: this.playerColor === color,
     }));
   }
 
@@ -80,6 +83,7 @@ export class BoardComponent implements OnInit {
       pawnRow.push({
         type: 'pawn',
         color,
+        isDraggable: this.playerColor === color,
       });
     }
     return pawnRow;
