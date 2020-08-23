@@ -139,9 +139,9 @@ export class gameLogic {
             case 'bishop': {
 				
 				const xDelta = Math.abs(xValOld - xValNew);
-    const yDelta = Math.abs(yValOld - yValNew);
+                const yDelta = Math.abs(yValOld - yValNew);
 				
-    if (xDelta == yDelta)
+                if (xDelta == yDelta)
                 {
                     let xVal = xValOld;
 
@@ -199,9 +199,9 @@ export class gameLogic {
             case 'knight': {
 				
 				const xDelta = Math.abs(xValOld - xValNew);
-    const yDelta = Math.abs(yValOld - yValNew);
+                const yDelta = Math.abs(yValOld - yValNew);
 				
-    if (xDelta == 1 && yDelta == 2 || xDelta == 2 && yDelta == 1)
+                if (xDelta == 1 && yDelta == 2 || xDelta == 2 && yDelta == 1)
                 {
                     return true;
                 }
@@ -210,9 +210,9 @@ export class gameLogic {
             case 'queen': {
 				
 				const xDelta = Math.abs(xValOld - xValNew);
-    const yDelta = Math.abs(yValOld - yValNew);
+                const yDelta = Math.abs(yValOld - yValNew);
 				
-    if (xDelta == yDelta || (yValOld == yValNew || xValOld == xValNew))
+                if (xDelta == yDelta || (yValOld == yValNew || xValOld == xValNew))
                 {
                     return true;
                 }
