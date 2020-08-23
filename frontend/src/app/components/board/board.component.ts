@@ -110,12 +110,14 @@ export class BoardComponent implements OnInit {
             piece: this.chessPieces[rowIndex][tileIndex],
             tileLocation: `${String.fromCharCode(65 + tileIndex)}${rowIndex + 1}`,
             isWhiteTile: true,
+            isEnPassant: false,
           };
         } else {
           return {
             piece: this.chessPieces[rowIndex][tileIndex],
             tileLocation: `${String.fromCharCode(65 + tileIndex)}${rowIndex + 1}`,
             isWhiteTile: false,
+            isEnPassant: false,
           };
         }
       });
