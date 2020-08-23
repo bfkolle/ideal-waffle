@@ -34,8 +34,9 @@ io.on('connection', (socket) => {
 
 		if (activePlayers.length < 2){
 			activePlayers.push(socket.id);
+			console.log(activePlayers.length);
 
-			if (activePlayers.length = 1){
+			if (activePlayers.length == 1){
 				activePlayer = socket.id;
 				socket.role = "White";
 			}
@@ -47,8 +48,8 @@ io.on('connection', (socket) => {
 			socket.role = "Spectator";
 		}
 
-		socket.broadcast.emit('newPlayer', socket.userName, socket.role);
-		socket.emit('playerList', "temp");
+		//socket.broadcast.emit('newPlayer', socket.userName, socket.role);
+		//socket.emit('playerList', "temp");
 
 		console.log(`Player ${userName} has connected with ID: ${socket.id}`);
 	});
@@ -75,8 +76,11 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('startGame', () => {
+		console.log("starGame called");
+		console.log(activePlayers.length);
 		if (activePlayers.length == 2){
-			io.emit('gameStart');
+			io.sockets.sockets[activePlayer].emit('yourColor', 'white');
+			io.sockets.sockets[activePlayers[1]].emit('yourColor', 'black');
 			io.sockets.sockets[activePlayer].emit('yourTurn');
 		}
 	});
