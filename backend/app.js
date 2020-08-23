@@ -8,6 +8,8 @@ var io = require('socket.io')(server);
 // trackers
 var allClients = [];
 var activePlayers = [];
+var activePlayer;
+var gameOver = false;
 
 if (process.env.NODE_ENV) {
 	// setup for production
@@ -18,7 +20,7 @@ if (process.env.NODE_ENV) {
 	});
 } else {
 	app.get('/', (req, res) => {
-		res.send('Backend is working');
+		res.send("Backend is working");
 	});
 }
 
@@ -28,33 +30,94 @@ io.on('connection', (socket) => {
 	// this is ideally triggerd on connection after the user has entered a username
 	socket.on('addUser', (userName) => {
 		socket.userName = userName;
-		allClients.push(userName);
+		allClients.push(socket.id);
 
-		if (!activePlayers.length >= 2){
-			activePlayers.push(userName);
+		if (activePlayers.length < 2){
+			activePlayers.push(socket.id);
+
+			if (activePlayers.length = 1){
+				activePlayer = socket.id;
+				socket.role = "White";
+			}
+			else {
+				socket.role = "Black";
+			}
+		}
+		else {
+			socket.role = "Spectator";
 		}
 
-		console.log(userName);
+		socket.broadcast.emit('newPlayer', socket.userName, socket.role);
+		socket.emit('playerList', "temp");
+
+		console.log(`Player ${userName} has connected with ID: ${socket.id}`);
 	});
 
-	socket.on('testingMessage', (someStuff) => {
-		io.emit('testingMessage', someStuff);
+	socket.on('makeMove', (gameState) => {
+
+		if (socket.id == activePlayer){
+
+			activePlayers.shift();
+			activePlayers.push(socket.id);
+			activePlayer = activePlayer[0]; //io.sockets.sockets[id] <- this gets a particular socket
+			io.emit('moveMade', gameState);
+		}
+	});
+
+	socket.on('gameOver', () => {
+
+		if (socket.id == activePlayers[1]){
+
+			io.emit('gameOver', `${socket.userName} has won!`);
+			gameOver = true;
+		}
+	});
+
+	socket.on('startGame', () => {
+		if (activePlayers.length == 2){
+			io.emit('gameStart');
+		}
+	});
+
+	socket.on('newGame', () => {
+		if (gameOver){
+			activePlayers.forEach(id => {
+				allClients.shift();
+				allClients.push(id);
+			});
+			activePlayers = [];
+
+			allClients.forEach(id => {
+				if (activePlayers.length < 2){
+					activePlayers.push(id);
+				}
+			});
+
+			if (activePlayers.length >= 1){
+				activePlayer = activePlayers[0];
+			}
+		}
 	});
 
 	// handles disconnects
 	socket.on('disconnect', () => {
-		allClients.splice(allClients.indexOf(socket.userName), 1);
-		if (activePlayers.indexOf(socket.userName) != -1) {
-			activePlayers.splice(allClients.indexOf(socket.userName));
+		allClients.splice(allClients.indexOf(socket.id), 1);
+
+		if (activePlayers.indexOf(socket.id) != -1) {
+
+			activePlayers.splice(activePlayers.indexOf(socket.id), 1);
+			if (!gameOver){
+
+				gameOver = true;
+				io.emit('gameOver', `${socket.userName} has disconnected, game over!`);
+			}
 		}
+
+		console.log(`Player ${socket.userName} has disconnected with ID: ${socket.id}`);
 	});
 
 });
 
-// startup
-/*app.listen(port, () => {   
-	console.log(`Example app listening at http://localhost:${port}`);
-});*/
 server.listen(port, () => {
 	console.log(`Example app listening at http://localhost:${port}`);
 });
