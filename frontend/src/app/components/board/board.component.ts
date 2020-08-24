@@ -97,7 +97,7 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  private decodeCoords(val: string): number[]
+  public decodeCoords(val: string): number[]
   {
     const xVal: number = val.charCodeAt(0) - 65; // 65 is ASCII A, and we want A to equal 0. 65(A) - 65 = 0
     const yVal: number = parseInt(val.substring(1), 10) - 1;

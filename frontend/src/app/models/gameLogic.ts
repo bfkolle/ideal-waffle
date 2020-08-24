@@ -425,7 +425,7 @@ export default class GameLogic {
         piece: Piece,
         yValNew: number,
         ): boolean {
-            if (piece.type === 'pawn' && (yValNew === 0 || yValNew === 7)) {
+            if (piece.type === 'pawn' && ((piece.color === 'white' && yValNew === 7) || (piece.color === 'black' && yValNew === 0))) {
                 return true;
             }
             return false;
