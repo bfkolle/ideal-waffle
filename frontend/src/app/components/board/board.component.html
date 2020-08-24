@@ -29,6 +29,11 @@
             </div>
         </div>
     </div>
+    <div class="turnIndicator">
+        <p *ngIf="!gameStarted">Waiting for opponent to join...</p>
+        <p *ngIf="!isTurn && gameStarted">Opponent's turn</p>
+        <p *ngIf="isTurn && gameStarted">Your turn</p>
+    </div>
 </div>
 <div>
     <button mat-raised-button class="startButton" (click)="startGame()">Start Game</button>
