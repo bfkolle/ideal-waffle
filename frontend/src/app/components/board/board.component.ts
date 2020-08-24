@@ -22,6 +22,7 @@ export class BoardComponent implements OnInit {
   boardPattern: number[][] = [];
   board: BoardTile[][] = [];
   isTurn = false;
+  gameStarted = false;
   playerColor: string;
   pawnPromotedTo: string;
 
@@ -37,6 +38,7 @@ export class BoardComponent implements OnInit {
     this.board = this.setupBoard();
 
     this.socket.on('yourTurn', () => {
+      this.gameStarted = true;
       this.isTurn = true;
       console.log('my turn!');
     });
@@ -167,6 +169,7 @@ export class BoardComponent implements OnInit {
 
   startGame(): void  {
     this.socket.emit('startGame');
+    this.gameStarted = true;
   }
 
 }
