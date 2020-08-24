@@ -72,6 +72,7 @@ export class BoardComponent implements OnInit {
       {
         this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
         this.board[yValOld][xValOld].piece = undefined;
+        piece.canCastle = false;
         this.sendMove();
       } else {
         this.board[yValOld][xValOld].piece = event.previousContainer.data.piece;
@@ -106,7 +107,8 @@ export class BoardComponent implements OnInit {
   private generateBackRow(color: string): Piece[] {
     return BACK_ROW_PIECES.map(piece => ({
         type: piece,
-        color
+        color,
+        canCastle: true
     }));
   }
 
@@ -115,7 +117,8 @@ export class BoardComponent implements OnInit {
     for (let index = 0; index < 8; index++) {
       pawnRow.push({
         type: 'pawn',
-        color
+        color,
+        canCastle: false
       });
     }
     return pawnRow;

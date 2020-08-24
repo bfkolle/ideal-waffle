@@ -96,12 +96,57 @@ export default class GameLogic {
             }
             case 'king': {
                 const xDelta = Math.abs(xValOld - xValNew);
+                const xDiff = xValNew - xValOld;
                 const yDelta = Math.abs(yValOld - yValNew);
 
                 if (xDelta <= 1 && yDelta <= 1)
                 {
                     return true;
                 }
+                // castling
+                if (xDelta === 2 && yDelta === 0 && piece.canCastle === true)
+                {
+
+                    if (xDiff > 0)
+                    {
+                        if ( board[yValOld][7].piece === undefined || board[yValOld][7].piece.type !== 'rook' || !board[yValOld][7].piece.canCastle) {
+                            return false;
+                        }
+                        
+                        for (let i: number = xValOld + 1; i < 7; i++){
+                            if (board[yValOld][i].piece !== undefined){
+                                return false;
+                            }
+                        }
+
+                        if (checkValidation){
+                            board[yValOld][xValNew - 1].piece = board[yValOld][7].piece;
+                            board[yValOld][7].piece = undefined;
+                        }
+                        return true;
+                    }
+                    else if (xDiff < 0)
+                    {
+                        if (board[yValOld][0].piece.type !== 'rook' || !board[yValOld][0].piece.canCastle) {
+                            return false;
+                        }
+                        
+                        for (let i: number = xValOld - 1; i > 0; i--){
+                            if (board[yValOld][i].piece !== undefined){
+                                return false;
+                            }
+                        }
+
+                        if (checkValidation) {
+                            board[yValOld][xValNew + 1].piece = board[yValOld][0].piece;
+                            board[yValOld][0].piece = undefined;
+                        }
+
+                        return true;
+                    }
+
+                }
+
                 break;
             }
             case 'rook': {
