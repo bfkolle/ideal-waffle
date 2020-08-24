@@ -20,7 +20,7 @@ export class BoardComponent implements OnInit {
   board: BoardTile[][] = [];
   isTurn = false;
   // TEMPORARY: being set to white is temporary, plan on the BE handling that value @Jace
-  playerColor: string = '';
+  playerColor: string;
 
   constructor(private socket: Socket) { }
 
@@ -31,7 +31,7 @@ export class BoardComponent implements OnInit {
 
     this.socket.on('yourTurn', () => {
       this.isTurn = true;
-      console.log("my turn!");
+      console.log('my turn!');
     });
 
     this.socket.on('yourColor', (myColor) => {
