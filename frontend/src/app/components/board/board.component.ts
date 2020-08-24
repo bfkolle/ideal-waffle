@@ -1,8 +1,11 @@
+import { BoardService } from './../../services/board/board.service';
 import { Component, OnInit, Injectable } from '@angular/core';
-import { Piece, PieceMove } from './../../models/piece';
+import { MatDialog } from '@angular/material/dialog';
+import { Socket } from 'ngx-socket-io';
+import { PromoteDialogComponent } from './../promote-dialog/promote-dialog.component';
+import { Piece } from './../../models/piece';
 import { BoardTile } from './../../models/board';
 import GameLogic from '../../models/gameLogic';
-import { Socket } from 'ngx-socket-io';
 
 const BACK_ROW_PIECES: string[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
 
@@ -19,10 +22,14 @@ export class BoardComponent implements OnInit {
   boardPattern: number[][] = [];
   board: BoardTile[][] = [];
   isTurn = false;
-  // TEMPORARY: being set to white is temporary, plan on the BE handling that value @Jace
   playerColor: string;
+  pawnPromotedTo: string;
 
-  constructor(private socket: Socket) { }
+  constructor(private socket: Socket, public dialog: MatDialog, private boardService: BoardService) {
+    this.boardService.piecePromoted.subscribe((data) => {
+      this.pawnPromotedTo = data;
+    });
+   }
 
   ngOnInit(): void {
     this.boardPattern = this.setupBoardPattern();
@@ -58,20 +65,33 @@ export class BoardComponent implements OnInit {
       const piece = this.board[yValOld][xValOld].piece;
 
       if (GameLogic.isPawnPromoting(piece, yValNew)) {
-        console.log('pawn is promoting');
-      }
-
-      if (GameLogic.isValidMove(piece, this.board, yValOld, xValOld, yValNew, xValNew, true))
+        this.promotePawn(yValOld, xValOld, yValNew, xValNew);
+      } else if (GameLogic.isValidMove(piece, this.board, yValOld, xValOld, yValNew, xValNew, true))
       {
         this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
         this.board[yValOld][xValOld].piece = undefined;
         this.sendMove();
-      }
-      else
-      {
+      } else {
         this.board[yValOld][xValOld].piece = event.previousContainer.data.piece;
       }
     }
+  }
+
+  private promotePawn(yValOld: number, xValOld: number, yValNew: number, xValNew: number): void {
+    const ref = this.dialog.open(PromoteDialogComponent, {
+      width: '250px',
+      data: {playerColor: this.playerColor}
+    });
+
+    ref.afterClosed().subscribe(() => {
+      this.board[yValNew][xValNew].piece = {
+        ...this.board[yValOld][xValOld].piece,
+        type: this.pawnPromotedTo,
+      };
+      this.board[yValOld][xValOld].piece = undefined;
+      this.sendMove();
+      console.log('Pawn promotion was successful', this.pawnPromotedTo);
+    });
   }
 
   private decodeCoords(val: string): number[]
