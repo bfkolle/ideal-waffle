@@ -56,7 +56,7 @@ export class BoardComponent implements OnInit {
       const [xValNew, yValNew] = this.decodeCoords(event.container.data.tileLocation);
       const [xValOld, yValOld] = this.decodeCoords(event.previousContainer.data.tileLocation);
 
-      if (GameLogic.isValidMove(this.board[yValOld][xValOld].piece, this.board, yValOld, xValOld, yValNew, xValNew))
+       if(gameLogic.isValidMove(this.board[yValOld][xValOld].piece, this.board, yValOld, xValOld, yValNew, xValNew, true))
       {
         this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
         this.board[yValOld][xValOld].piece = undefined;
