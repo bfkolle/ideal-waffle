@@ -40,13 +40,13 @@ export default class GameLogic {
                     // This deals with non-capturing, only move 1-2 spaces forward
                     if (xValOld === xValNew) {
                         // Black pawns moving 2 spaces
-                        if (piece.color == 'black' && yValOld == 6 && yValNew == 4 && board[5][xValOld].piece == undefined){
+                        if (piece.color === 'black' && yValOld === 6 && yValNew === 4 && board[5][xValOld].piece === undefined){
                             board[yValOld - 1][xValNew].isEnPassant = true;
                             return true;
                         }
 
                         // White pawns moving 2 spaces
-                        if (piece.color == 'white' && yValOld == 1 && yValNew == 3 && board[2][xValOld].piece == undefined){
+                        if (piece.color === 'white' && yValOld === 1 && yValNew === 3 && board[2][xValOld].piece === undefined){
                             board[yValNew - 1][xValNew].isEnPassant = true;
                             return true;
                         }
@@ -105,12 +105,12 @@ export default class GameLogic {
                 break;
             }
             case 'rook': {
-                if (yValOld == yValNew)
+                if (yValOld === yValNew)
                 {
                     if (xValNew - xValOld > 0)
                     {
                         for (let i: number = xValOld + 1; i < xValNew; i++) {
-                            if (board[yValOld][i].piece != undefined) {
+                            if (board[yValOld][i].piece !== undefined) {
                                 return false;
                             }
                         }
@@ -118,7 +118,7 @@ export default class GameLogic {
                     else
                     {
                         for (let i: number = xValOld - 1; i > xValNew; i--) {
-                            if (board[yValOld][i].piece != undefined) {
+                            if (board[yValOld][i].piece !== undefined) {
                                 return false;
                             }
                         }
@@ -126,12 +126,12 @@ export default class GameLogic {
 
                     return true;
                 }
-                else if (xValOld == xValNew)
+                else if (xValOld === xValNew)
                 {
                     if (yValNew - yValOld > 0)
                     {
                         for (let i: number = yValOld + 1; i < yValNew; i++) {
-                            if (board[i][xValOld].piece != undefined) {
+                            if (board[i][xValOld].piece !== undefined) {
                                 return false;
                             }
                         }
@@ -139,7 +139,7 @@ export default class GameLogic {
                     else
                     {
                         for (let i: number = yValOld - 1; i > yValNew; i--) {
-                            if (board[i][xValOld].piece != undefined) {
+                            if (board[i][xValOld].piece !== undefined) {
                                 return false;
                             }
                         }
@@ -164,7 +164,7 @@ export default class GameLogic {
                         if (yValNew - yValOld > 0)
                         {
                             for (let i: number = yValOld + 1; i < yValNew; i++) {
-                                if (board[i][xVal].piece != undefined) {
+                                if (board[i][xVal].piece !== undefined) {
                                     return false;
                                 }
 
@@ -174,7 +174,7 @@ export default class GameLogic {
                         else
                         {
                             for (let i: number = yValOld - 1; i > yValNew; i--) {
-                                if (board[i][xVal].piece != undefined) {
+                                if (board[i][xVal].piece !== undefined) {
                                     return false;
                                 }
 
@@ -185,11 +185,10 @@ export default class GameLogic {
                     else
                     {
                         xVal--;
-                        
                         if (yValNew - yValOld > 0)
                         {
                             for (let i: number = yValOld + 1; i < yValNew; i++) {
-                                if (board[i][xVal].piece != undefined) {
+                                if (board[i][xVal].piece !== undefined) {
                                     return false;
                                 }
 
@@ -199,7 +198,7 @@ export default class GameLogic {
                         else
                         {
                             for (let i: number = yValOld - 1; i > yValNew; i--) {
-                                if (board[i][xVal].piece != undefined) {
+                                if (board[i][xVal].piece !== undefined) {
                                     return false;
                                 }
 
@@ -284,12 +283,12 @@ export default class GameLogic {
                     return true;
                 }
                 // tslint:disable-next-line: align
-                if (yValOld == yValNew)
+                if (yValOld === yValNew)
                 {
                     if (xValNew - xValOld > 0)
                     {
                         for (let i: number = xValOld + 1; i < xValNew; i++) {
-                            if (board[yValOld][i].piece != undefined) {
+                            if (board[yValOld][i].piece !== undefined) {
                                 return false;
                             }
                         }
@@ -297,7 +296,7 @@ export default class GameLogic {
                     else
                     {
                         for (let i: number = xValOld - 1; i > xValNew; i--) {
-                            if (board[yValOld][i].piece != undefined) {
+                            if (board[yValOld][i].piece !== undefined) {
                                 return false;
                             }
                         }
@@ -305,12 +304,12 @@ export default class GameLogic {
 
                     return true;
                 }
-                else if (xValOld == xValNew)
+                else if (xValOld === xValNew)
                 {
                     if (yValNew - yValOld > 0)
                     {
                         for (let i: number = yValOld + 1; i < yValNew; i++) {
-                            if (board[i][xValOld].piece != undefined) {
+                            if (board[i][xValOld].piece !== undefined) {
                                 return false;
                             }
                         }
@@ -318,7 +317,7 @@ export default class GameLogic {
                     else
                     {
                         for (let i: number = yValOld - 1; i > yValNew; i--) {
-                            if (board[i][xValOld].piece != undefined) {
+                            if (board[i][xValOld].piece !== undefined) {
                                 return false;
                             }
                         }
@@ -333,7 +332,8 @@ export default class GameLogic {
         return false;
     }
 
-    static moveCausesCheck(piece: Piece, board: BoardTile[][], yValOld: number, xValOld: number, yValNew: number, xValNew: number): boolean {
+    static moveCausesCheck(piece: Piece, board: BoardTile[][], yValOld: number,
+                           xValOld: number, yValNew: number, xValNew: number): boolean {
         if (this.isValidMove(piece, board, yValOld, xValOld, yValNew, xValNew, false)) {
             const tempPiece: Piece = board[yValNew][xValNew].piece;
             board[yValNew][xValNew].piece = board[yValOld][xValOld].piece;
@@ -348,7 +348,8 @@ export default class GameLogic {
                 for (let j = 0; j < 8; j++) {
                     const temp2Piece: Piece = board[i][j].piece;
 
-                    if (temp2Piece != undefined && temp2Piece.color != color && this.isValidMove(temp2Piece, board, i, j, yValKing, xValKing, true)) {
+                    if (temp2Piece !== undefined && temp2Piece.color !== color &&
+                        this.isValidMove(temp2Piece, board, i, j, yValKing, xValKing, true)) {
                         board[yValOld][xValOld].piece = board[yValNew][xValNew].piece;
                         board[yValNew][xValNew].piece = tempPiece;
                         return true;
@@ -369,7 +370,7 @@ export default class GameLogic {
             for (let j = 0; j < 8; j++) {
                 const tempPiece: Piece = board[i][j].piece;
 
-                if (tempPiece != undefined && tempPiece.color === color && tempPiece.type === 'king') {
+                if (tempPiece !== undefined && tempPiece.color === color && tempPiece.type === 'king') {
                     return [j, i];
                 }
             }
