@@ -11,7 +11,6 @@ export class PieceComponent implements OnInit {
   @Input() piece: string;
   @Input() color: string;
   @Input() isDraggable: boolean;
-
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,

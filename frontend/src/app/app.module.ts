@@ -11,12 +11,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { PieceComponent } from './components/piece/piece.component';
 import { BoardComponent } from './components/board/board.component';
 import { MyDialogComponent } from './components/my-dialog/my-dialog.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { PromoteDialogComponent } from './components/promote-dialog/promote-dialog.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -25,7 +27,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     AppComponent,
     PieceComponent,
     BoardComponent,
-    MyDialogComponent
+    MyDialogComponent,
+    PromoteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     BrowserAnimationsModule,
     HttpClientModule,
     MatIconModule,
+    MatGridListModule,
     DragDropModule,
     MatInputModule,
     MatDialogModule,
