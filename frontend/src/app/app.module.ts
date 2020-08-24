@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 
 import { PieceComponent } from './components/piece/piece.component';
@@ -35,6 +36,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     DragDropModule,
     MatInputModule,
     MatDialogModule,
+    MatButtonModule,
     FormsModule,
     SocketIoModule.forRoot(config)
   ],
