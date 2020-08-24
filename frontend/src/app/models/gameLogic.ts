@@ -138,4 +138,14 @@ export default class GameLogic {
             }
         }
     }
+
+    static isPawnPromoting(
+        piece: Piece,
+        yValNew: number,
+        ): boolean {
+            if (piece.type === 'pawn' && (yValNew === 0 || yValNew === 7)) {
+                return true;
+            }
+            return false;
+        }
 }

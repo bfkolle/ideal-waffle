@@ -55,8 +55,13 @@ export class BoardComponent implements OnInit {
     else {
       const [xValNew, yValNew] = this.decodeCoords(event.container.data.tileLocation);
       const [xValOld, yValOld] = this.decodeCoords(event.previousContainer.data.tileLocation);
+      const piece = this.board[yValOld][xValOld].piece;
 
-      if (GameLogic.isValidMove(this.board[yValOld][xValOld].piece, this.board, yValOld, xValOld, yValNew, xValNew))
+      if (GameLogic.isPawnPromoting(piece, yValNew)) {
+        console.log('pawn is promoting');
+      }
+
+      if (GameLogic.isValidMove(piece, this.board, yValOld, xValOld, yValNew, xValNew))
       {
         this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
         this.board[yValOld][xValOld].piece = undefined;
