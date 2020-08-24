@@ -11,7 +11,7 @@
                     *ngIf="tile.piece" 
                     [color]="tile.piece.color" 
                     [piece]="tile.piece.type" 
-                    [isDraggable]="tile.piece.isDraggable">
+                    [isDraggable]="((tile.piece.color === playerColor) && isTurn)">
                 </app-piece>
             </div>
             <div
@@ -24,7 +24,7 @@
                     *ngIf="tile.piece" 
                     [color]="tile.piece.color" 
                     [piece]="tile.piece.type" 
-                    [isDraggable]="tile.piece.isDraggable">
+                    [isDraggable]="((tile.piece.color === playerColor) && isTurn)">
                 </app-piece>
             </div>
         </div>

@@ -45,6 +45,7 @@ export class BoardComponent implements OnInit {
 
   private sendMove(): void {
     this.socket.emit('makeMove', this.board);
+    this.isTurn = false;
   }
 
   public movePiece(event): void {
@@ -59,13 +60,13 @@ export class BoardComponent implements OnInit {
       {
         this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
         this.board[yValOld][xValOld].piece = undefined;
+        this.sendMove();
       }
       else
       {
         this.board[yValOld][xValOld].piece = event.previousContainer.data.piece;
       }
     }
-    this.sendMove();
   }
 
   private decodeCoords(val: string): number[]
@@ -78,8 +79,7 @@ export class BoardComponent implements OnInit {
   private generateBackRow(color: string): Piece[] {
     return BACK_ROW_PIECES.map(piece => ({
         type: piece,
-        color,
-        isDraggable: this.playerColor === color,
+        color
     }));
   }
 
@@ -88,8 +88,7 @@ export class BoardComponent implements OnInit {
     for (let index = 0; index < 8; index++) {
       pawnRow.push({
         type: 'pawn',
-        color,
-        isDraggable: this.playerColor === color,
+        color
       });
     }
     return pawnRow;
