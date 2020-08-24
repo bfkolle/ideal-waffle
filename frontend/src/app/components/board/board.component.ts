@@ -38,6 +38,7 @@ export class BoardComponent implements OnInit {
     this.board = this.setupBoard();
 
     this.socket.on('yourTurn', () => {
+      this.gameStarted = true;
       this.isTurn = true;
       console.log('my turn!');
     });
