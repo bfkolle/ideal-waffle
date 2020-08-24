@@ -61,7 +61,7 @@ export class BoardComponent implements OnInit {
         console.log('pawn is promoting');
       }
 
-      if (GameLogic.isValidMove(piece, this.board, yValOld, xValOld, yValNew, xValNew))
+      if (GameLogic.isValidMove(piece, this.board, yValOld, xValOld, yValNew, xValNew, true))
       {
         this.board[yValNew][xValNew].piece = event.previousContainer.data.piece;
         this.board[yValOld][xValOld].piece = undefined;

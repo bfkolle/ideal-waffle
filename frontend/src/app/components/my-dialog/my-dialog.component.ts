@@ -16,7 +16,9 @@ export class MyDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<MyDialogComponent>,
     private socket: Socket,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {
+    dialogRef.disableClose = true;
+  }
 
   ngOnInit(): void {
   }
