@@ -54,7 +54,7 @@ export class gameLogic {
                             }
                             else if (board[yValOld + 1][xValNew].isEnPassant == true) {
                                 board[yValNew - 1][xValNew].isEnPassant = false;
- }
+                            }
 
                             return true;
                         }
@@ -141,12 +141,15 @@ export class gameLogic {
 				const xDelta = Math.abs(xValOld - xValNew);
                 const yDelta = Math.abs(yValOld - yValNew);
 				
+                // tslint:disable-next-line: align
                 if (xDelta == yDelta)
                 {
                     let xVal = xValOld;
 
                     if (xValNew - xValOld > 0)
                     {
+                        xVal++;
+
                         if (yValNew - yValOld > 0)
                         {
                             for (let i: number = yValOld + 1; i < yValNew; i++) {
@@ -170,6 +173,8 @@ export class gameLogic {
                     }
                     else
                     {
+                        xVal--;
+                        
                         if (yValNew - yValOld > 0)
                         {
                             for (let i: number = yValOld + 1; i < yValNew; i++) {
@@ -200,7 +205,8 @@ export class gameLogic {
 				
 				const xDelta = Math.abs(xValOld - xValNew);
                 const yDelta = Math.abs(yValOld - yValNew);
-				
+                
+                
                 if (xDelta == 1 && yDelta == 2 || xDelta == 2 && yDelta == 1)
                 {
                     return true;
@@ -211,13 +217,113 @@ export class gameLogic {
 				
 				const xDelta = Math.abs(xValOld - xValNew);
                 const yDelta = Math.abs(yValOld - yValNew);
-				
-                if (xDelta == yDelta || (yValOld == yValNew || xValOld == xValNew))
+                
+                // tslint:disable-next-line: align
+                if (xDelta == yDelta)
                 {
+                    let xVal = xValOld;
+
+                    if (xValNew - xValOld > 0)
+                    {
+                        xVal++;
+
+                        if (yValNew - yValOld > 0)
+                        {
+                            for (let i: number = yValOld + 1; i < yValNew; i++) {
+                                if (board[i][xVal].piece != undefined) {
+                                    return false;
+                                }
+
+                                xVal++;
+                            }
+                        }
+                        else
+                        {
+                            for (let i: number = yValOld - 1; i > yValNew; i--) {
+                                if (board[i][xVal].piece != undefined) {
+                                    return false;
+                                }
+
+                                xVal++;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        xVal--;
+                        
+                        if (yValNew - yValOld > 0)
+                        {
+                            for (let i: number = yValOld + 1; i < yValNew; i++) {
+                                if (board[i][xVal].piece != undefined) {
+                                    return false;
+                                }
+
+                                xVal--;
+                            }
+                        }
+                        else
+                        {
+                            for (let i: number = yValOld - 1; i > yValNew; i--) {
+                                if (board[i][xVal].piece != undefined) {
+                                    return false;
+                                }
+
+                                xVal--;
+                            }
+                        }
+                    }
+
                     return true;
                 }
-				break;
+                // tslint:disable-next-line: align
+                if (yValOld == yValNew)
+                {
+                    if (xValNew - xValOld > 0)
+                    {
+                        for (let i: number = xValOld + 1; i < xValNew; i++) {
+                            if (board[yValOld][i].piece != undefined) {
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (let i: number = xValOld - 1; i > xValNew; i--) {
+                            if (board[yValOld][i].piece != undefined) {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+                else if (xValOld == xValNew)
+                {
+                    if (yValNew - yValOld > 0)
+                    {
+                        for (let i: number = yValOld + 1; i < yValNew; i++) {
+                            if (board[i][xValOld].piece != undefined) {
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (let i: number = yValOld - 1; i > yValNew; i--) {
+                            if (board[i][xValOld].piece != undefined) {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+                
+                break;
             }
+
+            
         }
 
         return false;
