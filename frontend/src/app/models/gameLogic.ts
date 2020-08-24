@@ -128,6 +128,8 @@ export class gameLogic {
 
                     if (xValNew - xValOld > 0)
                     {
+                        xVal++;
+
                         if (yValNew - yValOld > 0)
                         {
                             for (let i: number = yValOld + 1; i < yValNew; i++) {
@@ -151,6 +153,8 @@ export class gameLogic {
                     }
                     else
                     {
+                        xVal--;
+                        
                         if (yValNew - yValOld > 0)
                         {
                             for (let i: number = yValOld + 1; i < yValNew; i++) {
@@ -193,6 +197,23 @@ export class gameLogic {
 
                 if (xDelta === yDelta || (yValOld === yValNew || xValOld === xValNew))
                 {
+                    if (yValNew - yValOld > 0)
+                    {
+                        for (let i: number = yValOld + 1; i < yValNew; i++) {
+                            if (board[i][xValOld].piece != undefined) {
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (let i: number = yValOld - 1; i > yValNew; i--) {
+                            if (board[i][xValOld].piece != undefined) {
+                                return false;
+                            }
+                        }
+                    }
+
                     return true;
                 }
                 break;
