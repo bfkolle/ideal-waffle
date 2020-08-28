@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  localhost: 'http://localhost:3000',
+  apiUrl: 'http://ktayah.com'
 };

@@ -20,7 +20,9 @@ import { MyDialogComponent } from './components/my-dialog/my-dialog.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { PromoteDialogComponent } from './components/promote-dialog/promote-dialog.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+import { environment } from './../environments/environment';
+
+const config: SocketIoConfig = { url: environment.production ? environment.apiUrl : environment.localhost, options: {} };
 
 @NgModule({
   declarations: [
